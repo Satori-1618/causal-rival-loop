@@ -1,0 +1,1622 @@
+[
+  {
+    "case_id": "dca1936ab1f6ab4887c17697",
+    "template_id": "4356f0933752e5939db5",
+    "truth_ast": {
+      "one": {
+        "left": {
+          "var": "a"
+        },
+        "op": "avg",
+        "right": {
+          "var": "b"
+        }
+      },
+      "op": "select",
+      "zero": {
+        "left": {
+          "var": "a"
+        },
+        "op": "avg",
+        "right": {
+          "left": {
+            "var": "a"
+          },
+          "op": "max",
+          "right": {
+            "var": "b"
+          }
+        }
+      }
+    },
+    "truth_kind": "represented"
+  },
+  {
+    "case_id": "b6e5e9b94c9cddd1c0290ed6",
+    "template_id": "3315a7cfc3e58fec829d",
+    "truth_ast": {
+      "one": {
+        "left": {
+          "var": "b"
+        },
+        "op": "avg",
+        "right": {
+          "left": {
+            "var": "a"
+          },
+          "op": "min",
+          "right": {
+            "var": "b"
+          }
+        }
+      },
+      "op": "select",
+      "zero": {
+        "var": "a"
+      }
+    },
+    "truth_kind": "represented"
+  },
+  {
+    "case_id": "9be1f5da5bd8e9ab800a2006",
+    "template_id": "4577751bfbd927598489",
+    "truth_ast": {
+      "one": {
+        "var": "a"
+      },
+      "op": "select",
+      "zero": {
+        "left": {
+          "var": "b"
+        },
+        "op": "avg",
+        "right": {
+          "left": {
+            "var": "a"
+          },
+          "op": "min",
+          "right": {
+            "var": "b"
+          }
+        }
+      }
+    },
+    "truth_kind": "represented"
+  },
+  {
+    "case_id": "b4d2136793a7627d135e0d1f",
+    "template_id": "e31532b28a3e7ec8dfef",
+    "truth_ast": {
+      "one": {
+        "left": {
+          "var": "a"
+        },
+        "op": "avg",
+        "right": {
+          "var": "b"
+        }
+      },
+      "op": "select",
+      "zero": {
+        "var": "a"
+      }
+    },
+    "truth_kind": "represented"
+  },
+  {
+    "case_id": "1dfc52892b11c69d1daef610",
+    "template_id": "f61b6e27a21757ad9237",
+    "truth_ast": {
+      "one": {
+        "left": {
+          "var": "a"
+        },
+        "op": "avg",
+        "right": {
+          "left": {
+            "var": "a"
+          },
+          "op": "min",
+          "right": {
+            "var": "b"
+          }
+        }
+      },
+      "op": "select",
+      "zero": {
+        "var": "b"
+      }
+    },
+    "truth_kind": "represented"
+  },
+  {
+    "case_id": "31df6347dc223c3f59cf24de",
+    "template_id": "27a9f534492f3ac78eab",
+    "truth_ast": {
+      "one": {
+        "var": "b"
+      },
+      "op": "select",
+      "zero": {
+        "left": {
+          "var": "a"
+        },
+        "op": "min",
+        "right": {
+          "var": "b"
+        }
+      }
+    },
+    "truth_kind": "represented"
+  },
+  {
+    "case_id": "11d0265dc4ab1aaa003071eb",
+    "template_id": "6580e08cf7e0a848e78c",
+    "truth_ast": {
+      "one": {
+        "var": "b"
+      },
+      "op": "select",
+      "zero": {
+        "left": {
+          "var": "b"
+        },
+        "op": "avg",
+        "right": {
+          "left": {
+            "var": "a"
+          },
+          "op": "max",
+          "right": {
+            "var": "b"
+          }
+        }
+      }
+    },
+    "truth_kind": "represented"
+  },
+  {
+    "case_id": "1e68d8aa39f241c9789e8f88",
+    "template_id": "fe592666c58bd2cf178b",
+    "truth_ast": {
+      "one": {
+        "left": {
+          "var": "b"
+        },
+        "op": "avg",
+        "right": {
+          "left": {
+            "var": "a"
+          },
+          "op": "min",
+          "right": {
+            "var": "b"
+          }
+        }
+      },
+      "op": "select",
+      "zero": {
+        "var": "b"
+      }
+    },
+    "truth_kind": "represented"
+  },
+  {
+    "case_id": "f7bfd3d8026468d92e6c2c95",
+    "template_id": "3274e6264b1e624c3a8b",
+    "truth_ast": {
+      "one": {
+        "left": {
+          "var": "b"
+        },
+        "op": "avg",
+        "right": {
+          "left": {
+            "var": "a"
+          },
+          "op": "min",
+          "right": {
+            "var": "b"
+          }
+        }
+      },
+      "op": "select",
+      "zero": {
+        "left": {
+          "var": "a"
+        },
+        "op": "min",
+        "right": {
+          "var": "b"
+        }
+      }
+    },
+    "truth_kind": "represented"
+  },
+  {
+    "case_id": "8f45a536fcc11fe90c6b5d73",
+    "template_id": "4ee52e057c03583ec9e4",
+    "truth_ast": {
+      "one": {
+        "left": {
+          "var": "a"
+        },
+        "op": "min",
+        "right": {
+          "var": "b"
+        }
+      },
+      "op": "select",
+      "zero": {
+        "left": {
+          "var": "a"
+        },
+        "op": "max",
+        "right": {
+          "var": "b"
+        }
+      }
+    },
+    "truth_kind": "represented"
+  },
+  {
+    "case_id": "6c30e61088e955b56ecaf0f7",
+    "template_id": "abc0c4436ff3a2d46fc0",
+    "truth_ast": {
+      "one": {
+        "left": {
+          "var": "a"
+        },
+        "op": "max",
+        "right": {
+          "var": "b"
+        }
+      },
+      "op": "select",
+      "zero": {
+        "left": {
+          "var": "a"
+        },
+        "op": "min",
+        "right": {
+          "var": "b"
+        }
+      }
+    },
+    "truth_kind": "represented"
+  },
+  {
+    "case_id": "a94e453ee9a44bb8b082d13f",
+    "template_id": "68f3849338c516749c5c",
+    "truth_ast": {
+      "one": {
+        "left": {
+          "var": "a"
+        },
+        "op": "max",
+        "right": {
+          "var": "b"
+        }
+      },
+      "op": "select",
+      "zero": {
+        "left": {
+          "var": "a"
+        },
+        "op": "avg",
+        "right": {
+          "left": {
+            "var": "a"
+          },
+          "op": "min",
+          "right": {
+            "var": "b"
+          }
+        }
+      }
+    },
+    "truth_kind": "represented"
+  },
+  {
+    "case_id": "2272df0c36be0f61f009e3b9",
+    "template_id": "173bc6904ff334b5d36d",
+    "truth_ast": {
+      "one": {
+        "var": "a"
+      },
+      "op": "select",
+      "zero": {
+        "left": {
+          "var": "a"
+        },
+        "op": "max",
+        "right": {
+          "var": "b"
+        }
+      }
+    },
+    "truth_kind": "represented"
+  },
+  {
+    "case_id": "e4737270391e40c2af6b6e3b",
+    "template_id": "286bf000cbdd5970ac23",
+    "truth_ast": {
+      "one": {
+        "left": {
+          "var": "a"
+        },
+        "op": "max",
+        "right": {
+          "var": "b"
+        }
+      },
+      "op": "select",
+      "zero": {
+        "left": {
+          "var": "b"
+        },
+        "op": "avg",
+        "right": {
+          "left": {
+            "var": "a"
+          },
+          "op": "max",
+          "right": {
+            "var": "b"
+          }
+        }
+      }
+    },
+    "truth_kind": "represented"
+  },
+  {
+    "case_id": "da5c1e35ba1f3a4af90aa2de",
+    "template_id": "af12471bbfa4616e82ea",
+    "truth_ast": {
+      "one": {
+        "var": "a"
+      },
+      "op": "select",
+      "zero": {
+        "left": {
+          "var": "a"
+        },
+        "op": "avg",
+        "right": {
+          "left": {
+            "var": "a"
+          },
+          "op": "min",
+          "right": {
+            "var": "b"
+          }
+        }
+      }
+    },
+    "truth_kind": "represented"
+  },
+  {
+    "case_id": "dcc9785e663cd0c4773e49d7",
+    "template_id": "789fae7d8f02215ffc28",
+    "truth_ast": {
+      "one": {
+        "left": {
+          "var": "b"
+        },
+        "op": "avg",
+        "right": {
+          "left": {
+            "var": "a"
+          },
+          "op": "min",
+          "right": {
+            "var": "b"
+          }
+        }
+      },
+      "op": "select",
+      "zero": {
+        "left": {
+          "var": "a"
+        },
+        "op": "avg",
+        "right": {
+          "var": "b"
+        }
+      }
+    },
+    "truth_kind": "represented"
+  },
+  {
+    "case_id": "a318303519209a3ce1780550",
+    "template_id": "7a20b68932741d195320",
+    "truth_ast": {
+      "one": {
+        "var": "b"
+      },
+      "op": "select",
+      "zero": {
+        "left": {
+          "var": "b"
+        },
+        "op": "avg",
+        "right": {
+          "left": {
+            "var": "a"
+          },
+          "op": "min",
+          "right": {
+            "var": "b"
+          }
+        }
+      }
+    },
+    "truth_kind": "represented"
+  },
+  {
+    "case_id": "aebbcca8772031149cf7595c",
+    "template_id": "f54c9209a90bbe2c4547",
+    "truth_ast": {
+      "one": {
+        "left": {
+          "var": "b"
+        },
+        "op": "avg",
+        "right": {
+          "left": {
+            "var": "a"
+          },
+          "op": "max",
+          "right": {
+            "var": "b"
+          }
+        }
+      },
+      "op": "select",
+      "zero": {
+        "left": {
+          "var": "a"
+        },
+        "op": "avg",
+        "right": {
+          "var": "b"
+        }
+      }
+    },
+    "truth_kind": "represented"
+  },
+  {
+    "case_id": "d84badb3881a413d75b40dce",
+    "template_id": "6ccf5867c50504e870b9",
+    "truth_ast": {
+      "one": {
+        "left": {
+          "var": "a"
+        },
+        "op": "max",
+        "right": {
+          "var": "b"
+        }
+      },
+      "op": "select",
+      "zero": {
+        "left": {
+          "var": "a"
+        },
+        "op": "avg",
+        "right": {
+          "left": {
+            "var": "a"
+          },
+          "op": "max",
+          "right": {
+            "var": "b"
+          }
+        }
+      }
+    },
+    "truth_kind": "represented"
+  },
+  {
+    "case_id": "c436e00881b0dc1d44a7fa99",
+    "template_id": "97e2a240097ec6be406e",
+    "truth_ast": {
+      "one": {
+        "var": "a"
+      },
+      "op": "select",
+      "zero": {
+        "left": {
+          "var": "a"
+        },
+        "op": "min",
+        "right": {
+          "var": "b"
+        }
+      }
+    },
+    "truth_kind": "represented"
+  },
+  {
+    "case_id": "6ea3d0cec4143685b0b3e246",
+    "template_id": "363319edec4da619ab55",
+    "truth_ast": {
+      "one": {
+        "left": {
+          "var": "a"
+        },
+        "op": "avg",
+        "right": {
+          "left": {
+            "var": "a"
+          },
+          "op": "min",
+          "right": {
+            "var": "b"
+          }
+        }
+      },
+      "op": "select",
+      "zero": {
+        "var": "a"
+      }
+    },
+    "truth_kind": "represented"
+  },
+  {
+    "case_id": "f86cba4a38cf60024befb670",
+    "template_id": "aefa69e63e20797ee207",
+    "truth_ast": {
+      "one": {
+        "left": {
+          "var": "a"
+        },
+        "op": "min",
+        "right": {
+          "var": "b"
+        }
+      },
+      "op": "select",
+      "zero": {
+        "left": {
+          "var": "b"
+        },
+        "op": "avg",
+        "right": {
+          "left": {
+            "var": "a"
+          },
+          "op": "min",
+          "right": {
+            "var": "b"
+          }
+        }
+      }
+    },
+    "truth_kind": "represented"
+  },
+  {
+    "case_id": "8ebc28289a97734c0cfd54f6",
+    "template_id": "c8dad8e860ebc8db4f6b",
+    "truth_ast": {
+      "one": {
+        "left": {
+          "var": "a"
+        },
+        "op": "max",
+        "right": {
+          "var": "b"
+        }
+      },
+      "op": "select",
+      "zero": {
+        "left": {
+          "var": "a"
+        },
+        "op": "max",
+        "right": {
+          "var": "b"
+        }
+      }
+    },
+    "truth_kind": "represented"
+  },
+  {
+    "case_id": "e086b88bdb88ea0439babddf",
+    "template_id": "fc1ec405be15eeb98fcc",
+    "truth_ast": {
+      "one": {
+        "left": {
+          "var": "a"
+        },
+        "op": "avg",
+        "right": {
+          "left": {
+            "var": "a"
+          },
+          "op": "min",
+          "right": {
+            "var": "b"
+          }
+        }
+      },
+      "op": "select",
+      "zero": {
+        "left": {
+          "var": "a"
+        },
+        "op": "max",
+        "right": {
+          "var": "b"
+        }
+      }
+    },
+    "truth_kind": "represented"
+  },
+  {
+    "alias_ast": {
+      "left": {
+        "one": {
+          "left": {
+            "var": "b"
+          },
+          "op": "avg",
+          "right": {
+            "left": {
+              "var": "a"
+            },
+            "op": "max",
+            "right": {
+              "var": "b"
+            }
+          }
+        },
+        "op": "select",
+        "zero": {
+          "left": {
+            "var": "a"
+          },
+          "op": "avg",
+          "right": {
+            "var": "b"
+          }
+        }
+      },
+      "op": "avg",
+      "right": {
+        "one": {
+          "left": {
+            "var": "b"
+          },
+          "op": "avg",
+          "right": {
+            "left": {
+              "var": "a"
+            },
+            "op": "max",
+            "right": {
+              "var": "b"
+            }
+          }
+        },
+        "op": "select",
+        "zero": {
+          "left": {
+            "var": "a"
+          },
+          "op": "avg",
+          "right": {
+            "var": "b"
+          }
+        }
+      }
+    },
+    "alias_proof": "(r+r)/2 = r for every real input and context",
+    "case_id": "b0b5c264912a333ad526e9ee",
+    "template_id": "f54c9209a90bbe2c4547",
+    "truth_ast": {
+      "one": {
+        "left": {
+          "var": "b"
+        },
+        "op": "avg",
+        "right": {
+          "left": {
+            "var": "a"
+          },
+          "op": "max",
+          "right": {
+            "var": "b"
+          }
+        }
+      },
+      "op": "select",
+      "zero": {
+        "left": {
+          "var": "a"
+        },
+        "op": "avg",
+        "right": {
+          "var": "b"
+        }
+      }
+    },
+    "truth_kind": "represented"
+  },
+  {
+    "alias_ast": {
+      "left": {
+        "one": {
+          "left": {
+            "var": "a"
+          },
+          "op": "max",
+          "right": {
+            "var": "b"
+          }
+        },
+        "op": "select",
+        "zero": {
+          "left": {
+            "var": "a"
+          },
+          "op": "max",
+          "right": {
+            "var": "b"
+          }
+        }
+      },
+      "op": "avg",
+      "right": {
+        "one": {
+          "left": {
+            "var": "a"
+          },
+          "op": "max",
+          "right": {
+            "var": "b"
+          }
+        },
+        "op": "select",
+        "zero": {
+          "left": {
+            "var": "a"
+          },
+          "op": "max",
+          "right": {
+            "var": "b"
+          }
+        }
+      }
+    },
+    "alias_proof": "(r+r)/2 = r for every real input and context",
+    "case_id": "a507a4135a79c1fe14d72bbb",
+    "template_id": "c8dad8e860ebc8db4f6b",
+    "truth_ast": {
+      "one": {
+        "left": {
+          "var": "a"
+        },
+        "op": "max",
+        "right": {
+          "var": "b"
+        }
+      },
+      "op": "select",
+      "zero": {
+        "left": {
+          "var": "a"
+        },
+        "op": "max",
+        "right": {
+          "var": "b"
+        }
+      }
+    },
+    "truth_kind": "represented"
+  },
+  {
+    "alias_ast": {
+      "left": {
+        "one": {
+          "left": {
+            "var": "b"
+          },
+          "op": "avg",
+          "right": {
+            "left": {
+              "var": "a"
+            },
+            "op": "max",
+            "right": {
+              "var": "b"
+            }
+          }
+        },
+        "op": "select",
+        "zero": {
+          "var": "a"
+        }
+      },
+      "op": "avg",
+      "right": {
+        "one": {
+          "left": {
+            "var": "b"
+          },
+          "op": "avg",
+          "right": {
+            "left": {
+              "var": "a"
+            },
+            "op": "max",
+            "right": {
+              "var": "b"
+            }
+          }
+        },
+        "op": "select",
+        "zero": {
+          "var": "a"
+        }
+      }
+    },
+    "alias_proof": "(r+r)/2 = r for every real input and context",
+    "case_id": "fadd7a1ab26d1e82bbfa6ae7",
+    "template_id": "372e3047d2b1a4df5cb6",
+    "truth_ast": {
+      "one": {
+        "left": {
+          "var": "b"
+        },
+        "op": "avg",
+        "right": {
+          "left": {
+            "var": "a"
+          },
+          "op": "max",
+          "right": {
+            "var": "b"
+          }
+        }
+      },
+      "op": "select",
+      "zero": {
+        "var": "a"
+      }
+    },
+    "truth_kind": "represented"
+  },
+  {
+    "alias_ast": {
+      "left": {
+        "one": {
+          "var": "b"
+        },
+        "op": "select",
+        "zero": {
+          "left": {
+            "var": "a"
+          },
+          "op": "avg",
+          "right": {
+            "left": {
+              "var": "a"
+            },
+            "op": "max",
+            "right": {
+              "var": "b"
+            }
+          }
+        }
+      },
+      "op": "avg",
+      "right": {
+        "one": {
+          "var": "b"
+        },
+        "op": "select",
+        "zero": {
+          "left": {
+            "var": "a"
+          },
+          "op": "avg",
+          "right": {
+            "left": {
+              "var": "a"
+            },
+            "op": "max",
+            "right": {
+              "var": "b"
+            }
+          }
+        }
+      }
+    },
+    "alias_proof": "(r+r)/2 = r for every real input and context",
+    "case_id": "b486886c3c771850c4f17172",
+    "template_id": "30885387a48dcf8f04c2",
+    "truth_ast": {
+      "one": {
+        "var": "b"
+      },
+      "op": "select",
+      "zero": {
+        "left": {
+          "var": "a"
+        },
+        "op": "avg",
+        "right": {
+          "left": {
+            "var": "a"
+          },
+          "op": "max",
+          "right": {
+            "var": "b"
+          }
+        }
+      }
+    },
+    "truth_kind": "represented"
+  },
+  {
+    "alias_ast": {
+      "left": {
+        "one": {
+          "var": "a"
+        },
+        "op": "select",
+        "zero": {
+          "left": {
+            "var": "b"
+          },
+          "op": "avg",
+          "right": {
+            "left": {
+              "var": "a"
+            },
+            "op": "max",
+            "right": {
+              "var": "b"
+            }
+          }
+        }
+      },
+      "op": "avg",
+      "right": {
+        "one": {
+          "var": "a"
+        },
+        "op": "select",
+        "zero": {
+          "left": {
+            "var": "b"
+          },
+          "op": "avg",
+          "right": {
+            "left": {
+              "var": "a"
+            },
+            "op": "max",
+            "right": {
+              "var": "b"
+            }
+          }
+        }
+      }
+    },
+    "alias_proof": "(r+r)/2 = r for every real input and context",
+    "case_id": "046c891b57a40ca5f78fb2e7",
+    "template_id": "3d41c78c850c09f42fe6",
+    "truth_ast": {
+      "one": {
+        "var": "a"
+      },
+      "op": "select",
+      "zero": {
+        "left": {
+          "var": "b"
+        },
+        "op": "avg",
+        "right": {
+          "left": {
+            "var": "a"
+          },
+          "op": "max",
+          "right": {
+            "var": "b"
+          }
+        }
+      }
+    },
+    "truth_kind": "represented"
+  },
+  {
+    "alias_ast": {
+      "left": {
+        "one": {
+          "var": "a"
+        },
+        "op": "select",
+        "zero": {
+          "left": {
+            "var": "a"
+          },
+          "op": "avg",
+          "right": {
+            "var": "b"
+          }
+        }
+      },
+      "op": "avg",
+      "right": {
+        "one": {
+          "var": "a"
+        },
+        "op": "select",
+        "zero": {
+          "left": {
+            "var": "a"
+          },
+          "op": "avg",
+          "right": {
+            "var": "b"
+          }
+        }
+      }
+    },
+    "alias_proof": "(r+r)/2 = r for every real input and context",
+    "case_id": "1cb28ffc25d78266f2d9fed4",
+    "template_id": "73c6bece83c1964f39e9",
+    "truth_ast": {
+      "one": {
+        "var": "a"
+      },
+      "op": "select",
+      "zero": {
+        "left": {
+          "var": "a"
+        },
+        "op": "avg",
+        "right": {
+          "var": "b"
+        }
+      }
+    },
+    "truth_kind": "represented"
+  },
+  {
+    "alias_ast": {
+      "left": {
+        "one": {
+          "var": "a"
+        },
+        "op": "select",
+        "zero": {
+          "left": {
+            "var": "a"
+          },
+          "op": "avg",
+          "right": {
+            "var": "b"
+          }
+        }
+      },
+      "op": "avg",
+      "right": {
+        "one": {
+          "var": "a"
+        },
+        "op": "select",
+        "zero": {
+          "left": {
+            "var": "a"
+          },
+          "op": "avg",
+          "right": {
+            "var": "b"
+          }
+        }
+      }
+    },
+    "alias_proof": "(r+r)/2 = r for every real input and context",
+    "case_id": "e4e5d241b7f07caaca1ef65a",
+    "template_id": "73c6bece83c1964f39e9",
+    "truth_ast": {
+      "one": {
+        "var": "a"
+      },
+      "op": "select",
+      "zero": {
+        "left": {
+          "var": "a"
+        },
+        "op": "avg",
+        "right": {
+          "var": "b"
+        }
+      }
+    },
+    "truth_kind": "represented"
+  },
+  {
+    "alias_ast": {
+      "left": {
+        "one": {
+          "left": {
+            "var": "a"
+          },
+          "op": "avg",
+          "right": {
+            "var": "b"
+          }
+        },
+        "op": "select",
+        "zero": {
+          "left": {
+            "var": "b"
+          },
+          "op": "avg",
+          "right": {
+            "left": {
+              "var": "a"
+            },
+            "op": "max",
+            "right": {
+              "var": "b"
+            }
+          }
+        }
+      },
+      "op": "avg",
+      "right": {
+        "one": {
+          "left": {
+            "var": "a"
+          },
+          "op": "avg",
+          "right": {
+            "var": "b"
+          }
+        },
+        "op": "select",
+        "zero": {
+          "left": {
+            "var": "b"
+          },
+          "op": "avg",
+          "right": {
+            "left": {
+              "var": "a"
+            },
+            "op": "max",
+            "right": {
+              "var": "b"
+            }
+          }
+        }
+      }
+    },
+    "alias_proof": "(r+r)/2 = r for every real input and context",
+    "case_id": "47d6a5a4859611c2bb74ffbd",
+    "template_id": "76e679481b0de4f23c35",
+    "truth_ast": {
+      "one": {
+        "left": {
+          "var": "a"
+        },
+        "op": "avg",
+        "right": {
+          "var": "b"
+        }
+      },
+      "op": "select",
+      "zero": {
+        "left": {
+          "var": "b"
+        },
+        "op": "avg",
+        "right": {
+          "left": {
+            "var": "a"
+          },
+          "op": "max",
+          "right": {
+            "var": "b"
+          }
+        }
+      }
+    },
+    "truth_kind": "represented"
+  },
+  {
+    "alias_ast": {
+      "left": {
+        "one": {
+          "left": {
+            "var": "a"
+          },
+          "op": "min",
+          "right": {
+            "var": "b"
+          }
+        },
+        "op": "select",
+        "zero": {
+          "left": {
+            "var": "b"
+          },
+          "op": "avg",
+          "right": {
+            "left": {
+              "var": "a"
+            },
+            "op": "max",
+            "right": {
+              "var": "b"
+            }
+          }
+        }
+      },
+      "op": "avg",
+      "right": {
+        "one": {
+          "left": {
+            "var": "a"
+          },
+          "op": "min",
+          "right": {
+            "var": "b"
+          }
+        },
+        "op": "select",
+        "zero": {
+          "left": {
+            "var": "b"
+          },
+          "op": "avg",
+          "right": {
+            "left": {
+              "var": "a"
+            },
+            "op": "max",
+            "right": {
+              "var": "b"
+            }
+          }
+        }
+      }
+    },
+    "alias_proof": "(r+r)/2 = r for every real input and context",
+    "case_id": "54a63a8af132234362c70c35",
+    "template_id": "69ddf3230442a5b26966",
+    "truth_ast": {
+      "one": {
+        "left": {
+          "var": "a"
+        },
+        "op": "min",
+        "right": {
+          "var": "b"
+        }
+      },
+      "op": "select",
+      "zero": {
+        "left": {
+          "var": "b"
+        },
+        "op": "avg",
+        "right": {
+          "left": {
+            "var": "a"
+          },
+          "op": "max",
+          "right": {
+            "var": "b"
+          }
+        }
+      }
+    },
+    "truth_kind": "represented"
+  },
+  {
+    "alias_ast": {
+      "left": {
+        "one": {
+          "left": {
+            "var": "a"
+          },
+          "op": "min",
+          "right": {
+            "var": "b"
+          }
+        },
+        "op": "select",
+        "zero": {
+          "left": {
+            "var": "a"
+          },
+          "op": "avg",
+          "right": {
+            "left": {
+              "var": "a"
+            },
+            "op": "min",
+            "right": {
+              "var": "b"
+            }
+          }
+        }
+      },
+      "op": "avg",
+      "right": {
+        "one": {
+          "left": {
+            "var": "a"
+          },
+          "op": "min",
+          "right": {
+            "var": "b"
+          }
+        },
+        "op": "select",
+        "zero": {
+          "left": {
+            "var": "a"
+          },
+          "op": "avg",
+          "right": {
+            "left": {
+              "var": "a"
+            },
+            "op": "min",
+            "right": {
+              "var": "b"
+            }
+          }
+        }
+      }
+    },
+    "alias_proof": "(r+r)/2 = r for every real input and context",
+    "case_id": "ca2e75f8931a95074b35b9cb",
+    "template_id": "489165593600b46dab3b",
+    "truth_ast": {
+      "one": {
+        "left": {
+          "var": "a"
+        },
+        "op": "min",
+        "right": {
+          "var": "b"
+        }
+      },
+      "op": "select",
+      "zero": {
+        "left": {
+          "var": "a"
+        },
+        "op": "avg",
+        "right": {
+          "left": {
+            "var": "a"
+          },
+          "op": "min",
+          "right": {
+            "var": "b"
+          }
+        }
+      }
+    },
+    "truth_kind": "represented"
+  },
+  {
+    "alias_ast": {
+      "left": {
+        "one": {
+          "left": {
+            "var": "a"
+          },
+          "op": "min",
+          "right": {
+            "var": "b"
+          }
+        },
+        "op": "select",
+        "zero": {
+          "var": "a"
+        }
+      },
+      "op": "avg",
+      "right": {
+        "one": {
+          "left": {
+            "var": "a"
+          },
+          "op": "min",
+          "right": {
+            "var": "b"
+          }
+        },
+        "op": "select",
+        "zero": {
+          "var": "a"
+        }
+      }
+    },
+    "alias_proof": "(r+r)/2 = r for every real input and context",
+    "case_id": "464919552df612e3fd57a751",
+    "template_id": "b8813d9dc6db5ecc8f68",
+    "truth_ast": {
+      "one": {
+        "left": {
+          "var": "a"
+        },
+        "op": "min",
+        "right": {
+          "var": "b"
+        }
+      },
+      "op": "select",
+      "zero": {
+        "var": "a"
+      }
+    },
+    "truth_kind": "represented"
+  },
+  {
+    "alias_ast": {
+      "left": {
+        "one": {
+          "left": {
+            "var": "a"
+          },
+          "op": "max",
+          "right": {
+            "var": "b"
+          }
+        },
+        "op": "select",
+        "zero": {
+          "left": {
+            "var": "a"
+          },
+          "op": "avg",
+          "right": {
+            "var": "b"
+          }
+        }
+      },
+      "op": "avg",
+      "right": {
+        "one": {
+          "left": {
+            "var": "a"
+          },
+          "op": "max",
+          "right": {
+            "var": "b"
+          }
+        },
+        "op": "select",
+        "zero": {
+          "left": {
+            "var": "a"
+          },
+          "op": "avg",
+          "right": {
+            "var": "b"
+          }
+        }
+      }
+    },
+    "alias_proof": "(r+r)/2 = r for every real input and context",
+    "case_id": "37ab360ba8e95649af46ebd7",
+    "template_id": "11a8165eac1564be24f0",
+    "truth_ast": {
+      "one": {
+        "left": {
+          "var": "a"
+        },
+        "op": "max",
+        "right": {
+          "var": "b"
+        }
+      },
+      "op": "select",
+      "zero": {
+        "left": {
+          "var": "a"
+        },
+        "op": "avg",
+        "right": {
+          "var": "b"
+        }
+      }
+    },
+    "truth_kind": "represented"
+  },
+  {
+    "case_id": "c0862d51afe70aef5f93aeda",
+    "truth_ast": {
+      "var": "a"
+    },
+    "truth_kind": "external_gain"
+  },
+  {
+    "case_id": "1c899c17d033077e325f8f2e",
+    "truth_ast": {
+      "var": "a"
+    },
+    "truth_kind": "external_gain"
+  },
+  {
+    "case_id": "6da53e60cf17f489e6b570c1",
+    "truth_ast": {
+      "var": "a"
+    },
+    "truth_kind": "external_gain"
+  },
+  {
+    "case_id": "b7de1f62bd753f27ed15ec13",
+    "truth_ast": {
+      "var": "a"
+    },
+    "truth_kind": "external_gain"
+  },
+  {
+    "case_id": "25c694536ebef8891cd2e820",
+    "truth_ast": {
+      "var": "a"
+    },
+    "truth_kind": "external_gain"
+  },
+  {
+    "case_id": "fbdca44fbbd42a7f5ec91a30",
+    "truth_ast": {
+      "var": "a"
+    },
+    "truth_kind": "external_gain"
+  },
+  {
+    "case_id": "a0b923911ce6cbcd6baad0c2",
+    "truth_ast": {
+      "var": "a"
+    },
+    "truth_kind": "external_gain"
+  },
+  {
+    "case_id": "cc09c9517caafe845a36e276",
+    "truth_ast": {
+      "var": "a"
+    },
+    "truth_kind": "external_gain"
+  },
+  {
+    "case_id": "f91be5dc83c070097d5d907d",
+    "truth_ast": {
+      "var": "a"
+    },
+    "truth_kind": "external_gain"
+  },
+  {
+    "case_id": "5da148c23cba8ddbb99f5c95",
+    "truth_ast": {
+      "var": "a"
+    },
+    "truth_kind": "external_gain"
+  },
+  {
+    "case_id": "56a2366e23f47119214d6c18",
+    "truth_ast": {
+      "var": "a"
+    },
+    "truth_kind": "external_gain"
+  },
+  {
+    "case_id": "2631c3f7ebd52b5408694c75",
+    "truth_ast": {
+      "var": "a"
+    },
+    "truth_kind": "external_gain"
+  }
+]
