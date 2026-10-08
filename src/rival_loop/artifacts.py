@@ -73,7 +73,11 @@ def source_bindings():
     for directory in ("src", "tests", "prompts", "configs", "docs"):
         paths.extend(p for p in (ROOT / directory).rglob("*")
                      if p.is_file() and "__pycache__" not in p.parts
-                     and not p.name.endswith(".pyc"))
+                     and not p.name.endswith(".pyc")
+                     # Installer-generated distribution metadata is absent
+                     # from a clean source export and is not source input.
+                     and not any(part.endswith((".egg-info", ".dist-info"))
+                                 for part in p.relative_to(ROOT).parts[:-1]))
     paths.extend(ROOT / p for p in ("README.md", "PROTOCOL.md", "schema.json",
                                     "pyproject.toml", "LICENSE", "requirements-lock.txt")
                  if (ROOT / p).is_file())

@@ -1,0 +1,33 @@
+{
+  "artifact_publication_commit": "559478711f710b9e1fa95bacad4a13cc5339abfa",
+  "disposition": "Preserve v1; supersede with development-v2; no execution under v1.",
+  "findings": [
+    {
+      "description": "Freeze binds six generated src/causal_rival_loop.egg-info files absent from the public Git tree.",
+      "evidence": "A clean GitHub codeload export refuses prepared_data with source bindings changed. All seven bound public bundle files match the local bytes; all tracked source hashes match.",
+      "required_correction": "Exclude generated packaging metadata, add regression coverage, prepare and publicly verify a new freeze.",
+      "severity": "release_blocker"
+    }
+  ],
+  "freeze_sha256": "c269b68edc1c3898be0a6f2f81362829933e6a2a39270acdb879ed8a774698eb",
+  "human_authorization": false,
+  "model_calls_made_by_reviewers": 0,
+  "offline_tests": {
+    "passed": 122,
+    "seconds": 14.39
+  },
+  "protected_evaluation_measurements_generated": false,
+  "public_freeze_url": "https://github.com/Satori-1618/causal-rival-loop/blob/559478711f710b9e1fa95bacad4a13cc5339abfa/freezes/development-v1/freeze.json",
+  "reviewed_at": "2026-10-08T15:11:00.080579+00:00",
+  "reviewer": "Codex separate engineering and scientific agents of the same system; not human approval",
+  "scientific_design": "PASS within the declared development scope; no outcome evidence",
+  "scope": [
+    "public artifact bytes",
+    "clean-export source bindings",
+    "qualification and power",
+    "matched comparison",
+    "budgets and execution gates"
+  ],
+  "source_commit": "fc4f2cb801d49358aff35eab6ebb1c41049205ca",
+  "status": "FAIL_RELEASE_WITHHELD"
+}

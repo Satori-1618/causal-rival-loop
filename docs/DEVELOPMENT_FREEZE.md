@@ -2,7 +2,9 @@
 
 This prepares the first live generator round. It does not authorize execution.
 The earlier local source/input checkpoint remains historical. No live generator
-outcomes preceded this configuration.
+outcomes preceded this configuration. Development-v1 was withheld by review for
+binding ignored installation metadata; [Amendment 002](AMENDMENT_002.md) requires
+a corrected, publicly verified development-v2 bundle before release.
 
 ## Fixed question and scope
 
