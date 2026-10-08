@@ -1,0 +1,12 @@
+{
+  "artifact_publication_commit": "32b37a446ef9df87537a025b4989f764f3648045",
+  "freeze_sha256": "f1c056690840b0d9996b784158d479ddd93c02997b85fe9a8f9d8410f343b09c",
+  "freeze_url": "https://raw.githubusercontent.com/Satori-1618/causal-rival-loop/32b37a446ef9df87537a025b4989f764f3648045/freezes/development-v2/freeze.json",
+  "locally_checked_at": "2026-10-08T15:21:09.294444+00:00",
+  "model_calls_before_publication": 0,
+  "public_http_date_at_inspection": "Thu, 08 Oct 2026 15:21:08 GMT",
+  "repository_pushed_at_at_inspection": "2026-10-08T15:19:27Z",
+  "source_commit": "1a12e087bd778ede34b54582d9a3381f1b69cf63",
+  "status": "public_freeze_bytes_verified",
+  "timing_scope": "GitHub repository metadata and public byte observation before any live generator request; not a claim that Git author dates authenticate publication."
+}

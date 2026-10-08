@@ -1,0 +1,60 @@
+{
+  "amendments": [
+    "Amendment002 excludes generated package metadata; v1 remains withheld."
+  ],
+  "artifact_publication_commit": "32b37a446ef9df87537a025b4989f764f3648045",
+  "disposition": "Suitable for development only after a separately bound human release and credential availability.",
+  "evidence_url": "https://github.com/Satori-1618/causal-rival-loop/blob/development-review-v2/reviews/development-v2/review.json",
+  "findings": [],
+  "freeze_sha256": "f1c056690840b0d9996b784158d479ddd93c02997b85fe9a8f9d8410f343b09c",
+  "human_authorization": false,
+  "limitations": [
+    "Agent reviews of the same system do not constitute human execution authorization.",
+    "Development is descriptive and covers represented cases only.",
+    "Authored two-coordinate finite-menu graphs with artificial known-variance noise; not trained-model discovery or introspection.",
+    "Primary evaluation has24cases, reused mechanism classes and the declared McNemar symmetry-null assumptions.",
+    "Returned provider model ID does not attest immutable weights; accounting rates do not guarantee an invoice.",
+    "Evaluation requires a separate public freeze and review."
+  ],
+  "live_generator_calls_made_by_reviewers": 0,
+  "protected_evaluation_measurements_generated": false,
+  "public_freeze": {
+    "commit": "32b37a446ef9df87537a025b4989f764f3648045",
+    "published_at": "2026-10-08T15:19:27Z",
+    "url": "https://github.com/Satori-1618/causal-rival-loop/blob/32b37a446ef9df87537a025b4989f764f3648045/freezes/development-v2/freeze.json"
+  },
+  "publication_evidence_scope": "GitHub repository metadata and public byte observation before any live generator request; not a claim that Git author dates authenticate publication.",
+  "reviewed_at": "2026-10-08T15:23:49.936424+00:00",
+  "reviewer": "Separate Codex engineering and scientific agents of the same system; not an independent human reviewer",
+  "reviewer_tasks": [
+    "/root/development_release_readiness",
+    "/root/development_scientific_freeze_review"
+  ],
+  "scope": [
+    "public artifact integrity",
+    "clean-export reproducibility",
+    "source/input bindings",
+    "qualification",
+    "matched comparison",
+    "power and interpretation",
+    "budget and execution gates"
+  ],
+  "source_commit": "1a12e087bd778ede34b54582d9a3381f1b69cf63",
+  "status": "PASS",
+  "verification": {
+    "all_development_qualifications_recomputed": 12,
+    "catalog_classes_preserved": 59,
+    "clean_public_source_files_matching": 39,
+    "combined_reservation_usd": 17.69472,
+    "configured_accounting_ceiling_usd": 20,
+    "development_reservation_usd": 4.42368,
+    "missing_execution_flag_refuses": true,
+    "missing_review_release_refuses": true,
+    "noise_resolved_settings": 31,
+    "offline_test_seconds": 14.69,
+    "offline_tests_passed": 136,
+    "parameter_settings_checked": 48,
+    "population_config_files_identical_to_v1": 4,
+    "public_bundle_files_matching": 7
+  }
+}
