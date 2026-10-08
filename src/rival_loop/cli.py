@@ -24,6 +24,10 @@ def main(argv=None):
     freeze.add_argument("--split", choices=("development", "evaluation"), required=True)
     freeze.add_argument("--development-run")
     freeze.add_argument("--out", required=True)
+    source = commands.add_parser("freeze-source", help="Seal source and unmeasured inputs; does not release a live run")
+    source.add_argument("--prepared", required=True)
+    source.add_argument("--qualification", required=True)
+    source.add_argument("--out", required=True)
     run = commands.add_parser("run", help="Live generator; refused without bound freeze/review/release")
     run.add_argument("--prepared", required=True)
     run.add_argument("--freeze")
@@ -47,6 +51,8 @@ def main(argv=None):
         elif args.command == "freeze":
             result = governance.freeze(args.prepared, args.qualification, args.split,
                                        args.out, args.development_run)
+        elif args.command == "freeze-source":
+            result = governance.freeze_source(args.prepared, args.qualification, args.out)
         else:
             from . import runner
             if args.command == "smoke":
@@ -67,7 +73,7 @@ def main(argv=None):
                     write_json(args.out, result)
         # Keep complete matrices in artifacts rather than printing them.
         concise = {key: value for key, value in result.items()
-                   if key not in ("source_bindings", "files", "development_checks", "config", "known_bank_preflight")}
+                   if key not in ("source_bindings", "files", "development_checks", "config", "known_bank_preflight", "design_qualification")}
         print(json.dumps(concise, indent=2, allow_nan=False))
         if result.get("status") in ("incomplete", "not_qualified"):
             raise SystemExit(1)

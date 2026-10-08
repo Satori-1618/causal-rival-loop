@@ -21,7 +21,7 @@ def configured_settings():
 
 @pytest.fixture
 def mocked_provider(monkeypatch):
-    encoding = SimpleNamespace(encode=lambda value: list(range(len(value))))
+    encoding = SimpleNamespace(encode=lambda value, **_kwargs: list(range(len(value))))
     monkeypatch.setitem(sys.modules, "tiktoken", SimpleNamespace(get_encoding=lambda _: encoding))
     monkeypatch.setenv("OPENAI_API_KEY", "fixture-key-never-recorded")
     return providers.OpenAIProvider(configured_settings())
@@ -53,7 +53,8 @@ def test_live_adapter_is_tool_free_stateless_and_never_sends_truth_or_key(mocked
 
 
 @pytest.mark.parametrize("changes", [{"model": "changed-model"}, {"usage": None},
-                                      {"usage": {"input_tokens": 10001, "output_tokens": 1}}])
+                                      {"usage": {"input_tokens": 10001, "output_tokens": 1}},
+                                      {"usage": {"input_tokens": True, "output_tokens": 1}}])
 def test_api_validation_preserves_success_response(mocked_provider, monkeypatch, changes):
     response = api_response(**changes)
     monkeypatch.setattr(providers.urllib.request, "urlopen", lambda *_a, **_k: io.BytesIO(json.dumps(response).encode()))
@@ -79,6 +80,48 @@ def test_input_limit_refuses_before_request(mocked_provider, monkeypatch):
     settings = configured_settings()
     settings["max_input_tokens"] = 150
     assert mocked_provider.generate("too long" * 100, settings)["status"] == "input_limit"
+
+
+@pytest.mark.parametrize("field", ["max_input_tokens", "max_output_tokens"])
+@pytest.mark.parametrize("value", [True, False, 1024.0, 1024.5])
+def test_token_caps_require_actual_integers(field, value):
+    settings = configured_settings()
+    settings[field] = value
+    with pytest.raises(ValueError, match=field + " must be an integer"):
+        providers.validate_live_settings(settings)
+
+
+def test_real_tokenizer_counts_special_token_spelling_as_prose_before_api(monkeypatch):
+    pytest.importorskip("tiktoken")
+    settings = configured_settings()
+    settings["max_input_tokens"] = 128
+    provider = providers.OpenAIProvider(settings)
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    monkeypatch.setattr(providers.urllib.request, "urlopen",
+                        lambda *_a, **_k: pytest.fail("local input limit must prevent requests"))
+    result = provider.generate("Literal <|endoftext|> is ordinary prompt prose.", settings)
+    assert result["status"] == "input_limit"
+    assert result["usage"] is None
+    assert result["cost_usd"] == result["cost_reserved_usd"] == 0.0
+
+
+def test_real_tokenizer_allows_special_token_spelling_in_mocked_api_flow(monkeypatch):
+    pytest.importorskip("tiktoken")
+    settings = configured_settings()
+    provider = providers.OpenAIProvider(settings)
+    monkeypatch.setenv("OPENAI_API_KEY", "fixture-key-never-recorded")
+    requests = []
+    def request(req, timeout):
+        assert timeout == settings["timeout_seconds"]
+        requests.append(json.loads(req.data))
+        return io.BytesIO(json.dumps(api_response()).encode())
+    monkeypatch.setattr(providers.urllib.request, "urlopen", request)
+    prompt = "Literal <|endoftext|> is ordinary prompt prose."
+    result = provider.generate(prompt, settings)
+    assert result["status"] == "ok" and result["cost_usd"] == .0002
+    assert len(requests) == 1 and requests[0]["input"] == prompt
+    assert requests[0]["store"] is False and requests[0]["tools"] == []
+    assert "previous_response_id" not in requests[0]
 
 
 def released_fixture(tmp_path, monkeypatch):

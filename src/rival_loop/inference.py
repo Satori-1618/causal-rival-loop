@@ -18,13 +18,14 @@ from typing import Any
 import numpy as np
 from scipy.stats import beta, binom, binomtest
 
-from .vendor import compatible_set, selection
+from .vendor import compatible_set, design, selection
 
 MEASUREMENT_ALPHA = 0.005
 SAMPLES_PER_CELL = 8
 ANCHORS = 4
 EXTRAS = 4
 MENU_WIDTH = 16
+SELECTION_POLICY = "coverage_first"
 PLANNED_STRATA = {"represented": 12, "equivalent": 12, "outside": 12}
 PRIMARY_STRATA = ("represented", "equivalent")
 MEANINGFUL_GAIN = 0.20
@@ -84,24 +85,51 @@ def radii(public: dict[str, Any], numeric_bound: float, n: int = SAMPLES_PER_CEL
 
 def select_cells(predictions: dict[str, list[float]], groups: list[list[str]],
                  public: dict[str, Any], numeric_bound: float) -> dict[str, Any]:
-    """Use the unchanged upstream maximin selector, with actual 4+4/8 budget."""
+    """Purchase fixed dose-2 reads of both coordinates in both contexts.
+
+    Coverage is prespecified independently of submitted rivals and outcomes.
+    Otherwise a context-independent bank can make unconstrained maximin ties
+    spend all four extras in one context and hide omitted context dependence.
+    The unchanged upstream maximin plan and its scores remain diagnostics.
+    """
     menu = public["menu"]
-    if len(menu) != MENU_WIDTH:
+    anchors = [f"{kind}:c{context}" for context in (0, 1) for kind in ("native", "full")]
+    extras = [f"read_{channel}:c{context}:d2" for context in (0, 1) for channel in ("a", "b")]
+    expected = anchors + [f"read_{channel}:c{context}:d{dose}"
+                          for context in (0, 1) for channel in ("a", "b")
+                          for dose in ("0.5", "1", "2")]
+    if (len(menu) != MENU_WIDTH or len(set(menu)) != MENU_WIDTH
+            or set(menu) != set(expected) or list(menu[:ANCHORS]) != anchors):
         raise ValueError("the pilot requires the frozen 16-cell menu")
     # The upstream selector requires at least two full-menu classes. Do not turn
     # a single declared class into an identification claim.
     if len(groups) < 2:
         names = [name for group in groups for name in group]
-        if not groups or set(names) != set(predictions) or len(names) != len(set(names)):
+        if (not groups or any(not group for group in groups)
+                or set(names) != set(predictions) or len(names) != len(set(names))):
             raise ValueError("groups must partition the bank")
+        rows = np.asarray([predictions[name] for name in names], dtype=float)
+        if rows.shape != (len(names), MENU_WIDTH) or not np.isfinite(rows).all():
+            raise ValueError("predictions must be complete and finite")
+        if any(list(predictions[name]) != list(predictions[names[0]]) for name in names):
+            raise ValueError("declared aliases disagree on the full menu")
         return {"status": "no_discriminating_rivals", "cells": list(range(ANCHORS)),
-                "extras": [], "plans": {}, "radius": radii(public, numeric_bound)}
+                "policy": SELECTION_POLICY, "extras": [], "plans": {},
+                "radius": radii(public, numeric_bound)}
     result = selection.select(predictions, groups, menu, _sigmas(public), numeric_bound,
                               mandatory_count=ANCHORS, extras=EXTRAS,
                               samples=SAMPLES_PER_CELL, alpha=MEASUREMENT_ALPHA,
                               seed=0)
-    result.update(status="selected", cells=result["plans"]["maximin"]["cells"],
-                  extras=result["plans"]["maximin"]["cells"][ANCHORS:])
+    chosen_extras = sorted(menu.index(cell) for cell in extras)
+    cells = list(range(ANCHORS)) + chosen_extras
+    result["plans"][SELECTION_POLICY] = {"cells": cells,
+                                        "counts": [SAMPLES_PER_CELL] * len(cells),
+                                        "cost": SAMPLES_PER_CELL * len(cells)}
+    gap = selection.pair_gaps(predictions, groups)
+    ratios = (gap / (2 * np.asarray(result["radius"])[None, :]))[:, cells].max(axis=1)
+    result.update(status="selected", policy=SELECTION_POLICY, cells=cells,
+                  extras=chosen_extras, minimum_separation_ratio=float(ratios.min()),
+                  maximin_score_scope="upstream unconstrained maximin diagnostic plan")
     return result
 
 
@@ -118,19 +146,38 @@ def known_bank_preflight(predictions: dict[str, list[float]], groups: list[list[
                          public: dict[str, Any], numeric_bound: float) -> dict[str, Any]:
     """Outcome-free resolution check for the actual four-extra-cell budget.
 
-    A ratio above one means at least one selected cell has disjoint simultaneous
-    prediction intervals for a given class pair. This is a design diagnostic,
-    not observed success or a universal identification guarantee.
+    Structural preservation means distinct submitted full-menu classes stay
+    distinct after restriction and is independent of noise. Numerical resolution requires
+    a pair gap greater than twice the deterministic allowance. A ratio above one
+    additionally means disjoint simultaneous prediction intervals including
+    sampling noise. These are design diagnostics, not observed success or a
+    universal identification guarantee.
     """
     selected = select_cells(predictions, groups, public, numeric_bound)
     if selected["status"] != "selected":
         return {"status": selected["status"], "class_count": len(groups),
-                "cells": selected["cells"], "all_pairs_above_one": False}
+                "policy": selected["policy"], "cells": selected["cells"],
+                "all_pairs_above_one": False}
     gap = selection.pair_gaps(predictions, groups)
     radius = np.asarray(selected["radius"])
     ratios = (gap / (2 * radius[None, :]))[:, selected["cells"]].max(axis=1)
+    maximum_gaps = gap[:, selected["cells"]].max(axis=1)
+    preserved = bool(np.all(maximum_gaps > 0))
+    numeric_resolved = bool(np.all(maximum_gaps > 2 * numeric_bound))
+    resolved = bool(np.all(ratios > 1))
+    selected_classes = design.signatures(design.restrict(predictions, selected["cells"]))
+    resolution_status = ("structural_blindspot" if not preserved else "numerical_limit"
+                         if not numeric_resolved else "noise_limit" if not resolved else "resolved")
     return {"status": "qualified", "class_count": len(groups),
-            "cells": selected["cells"], "all_pairs_above_one": bool(np.all(ratios > 1)),
+            "policy": selected["policy"], "cells": selected["cells"],
+            "structural_classes_preserved": preserved,
+            "purchased_cell_class_count": len(selected_classes),
+            "collapsed_full_menu_class_pairs": int(np.count_nonzero(maximum_gaps == 0)),
+            "minimum_structural_gap": float(maximum_gaps.min()),
+            "numerically_resolved": numeric_resolved,
+            "numerical_allowance_per_cell": numeric_bound,
+            "resolution_status": resolution_status,
+            "all_pairs_above_one": resolved,
             "minimum_ratio": float(ratios.min()), "pair_ratios": ratios.tolist(),
             "physical_draws": SAMPLES_PER_CELL * (ANCHORS + EXTRAS),
             "interpretation": "conditional design diagnostic, not outcome evidence"}
@@ -245,7 +292,7 @@ def _descriptive_resolution(rows: list[dict[str, Any]]) -> dict[str, Any]:
                 "correct_resolution_paired_counts": _paired(members, "correct_resolution")}
 
     return {"scope": "descriptive recorded-case counts only; no additional tests or generic efficacy claims",
-            "ratio_definition": "shared initial submitted-bank maximin score; does not establish separation from an omitted truth",
+            "ratio_definition": "shared initial submitted-bank separation under coverage-first plan; does not establish separation from an omitted truth",
             "ratio_bands": {key: describe(members) for key, members in ratio_groups.items()},
             "records_without_ratio": len(rows) - sum(len(members) for members in ratio_groups.values()),
             "by_known_noise_sd": {str(sigma): describe(members) for sigma, members in sorted(noise_groups.items())},

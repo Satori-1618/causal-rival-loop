@@ -2,6 +2,9 @@
 
 There is no live release in this repository by default. The commands below show
 the workflow, not authorization to execute it.
+The separate `freeze-source` command seals a local source/input checkpoint with
+pending live settings; the live runner explicitly refuses that snapshot.
+[FIRST_LOOP.md](FIRST_LOOP.md) gives the short starting checklist.
 
 1. Complete development review and pin every live generation setting in a new
    configuration: provider, exact model revision, generation options, input and

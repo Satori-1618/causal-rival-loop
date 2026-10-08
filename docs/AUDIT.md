@@ -2,6 +2,36 @@
 
 **Status: implementation checks passed; no live experiment released.**
 
+This records the initial engineering review, not the final design review.
+The later review found a selector blind spot, an unbound archived template,
+and tokenizer fragility. [Amendment 001](AMENDMENT_001.md) records their
+corrections and regression checks before the source/input freeze.
+
+## Re-review of Amendment 001
+
+Two agents separately re-reviewed the design and engineering changes; neither
+found a remaining blocker within that scope. Both reviews preceded the local
+source/input checkpoint and made no model/API requests.
+
+- The old seed-only counterexample now preserves 59/59 catalog classes under
+  the purchased measurements; the old maximin diagnostic preserved 9/59.
+- All 48 parameter settings preserve 59 classes and pass numerical resolution.
+  Of these, 31 are noise-resolved and 17 noise-limited. The latter are retained.
+  Both adversarial starting banks also preserve all 59 classes.
+- Archived-template injection is refused even without checking current source.
+  Special-token prose and noninteger token ceilings have regression tests.
+- The source/input snapshot preserves all six copied file hashes, 48 unmeasured
+  cases, and private-file permissions. It cannot authorize a live run.
+- The complete suite passed independently: **122 tests in 11.87 seconds**.
+
+These reviews are by agents of the same system. They establish local software
+behavior, not independent human approval, public preregistration, generation
+quality, or an intervention-feedback advantage. The full live freeze is pending
+model settings, prices, publication, review, and execution release; see
+[FIRST_LOOP.md](FIRST_LOOP.md).
+
+## Initial review record
+
 A separate agent reviewed the runner, inference, privacy boundary, budgets, and
 artifact replay, then reran the suite independently:
 

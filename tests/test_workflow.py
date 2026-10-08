@@ -174,6 +174,75 @@ def test_rehashed_hidden_truth_in_prompt_is_refused(tmp_path):
         runner.verify_run(out)
 
 
+@pytest.mark.parametrize("phase", ["initial", *runner.ARMS])
+@pytest.mark.parametrize("check_source", [True, False])
+def test_resealed_hidden_truth_in_template_is_refused_before_replay(tmp_path, monkeypatch,
+                                                                  phase, check_source):
+    import rival_loop.worlds
+    out = tmp_path / "run"
+    runner.smoke(out, 1)
+    header = artifacts.read_json(out / "header.json")
+    truth = artifacts.read_json(out / "inputs.json")["private"][0]["truth_ast"]
+    header["templates"][phase] += "\nHIDDEN_TRUTH: " + artifacts.canonical(truth).decode()
+    (out / "header.json").write_text(json.dumps(header, indent=2, sort_keys=True) + "\n")
+    def mutate(event):
+        if event["kind"] == "call_attempt" and event["payload"]["phase"] == phase:
+            payload = event["payload"]
+            payload["prompt"] = runner._prompt(header["templates"][phase], payload["payload"])
+            payload["prompt_sha256"] = artifacts.digest(payload["prompt"])
+    reseal_after_mutation(out, mutate)
+    monkeypatch.setattr(rival_loop.worlds, "qualify",
+                        lambda *_a, **_k: pytest.fail("template binding must be checked before case replay"))
+    with pytest.raises(ValueError, match="prompt template differs from frozen source binding"):
+        runner.verify_run(out, check_source=check_source)
+
+
+@pytest.mark.parametrize("mutation", ["missing", "extra", "nonstring", "missing_binding"])
+def test_prompt_template_schema_is_checked_before_replay(tmp_path, monkeypatch, mutation):
+    import rival_loop.worlds
+    out = tmp_path / "run"
+    runner.smoke(out, 1)
+    header = artifacts.read_json(out / "header.json")
+    if mutation == "missing":
+        del header["templates"]["initial"]
+    elif mutation == "extra":
+        header["templates"]["undeclared"] = "extra prompt"
+    elif mutation == "nonstring":
+        header["templates"]["initial"] = {"text": "prompt"}
+    else:
+        del header["source_bindings"]["prompts/initial.md"]
+        manifest = artifacts.read_json(out / "run.json")
+        manifest["source_bindings"] = header["source_bindings"]
+        (out / "run.json").write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n")
+    (out / "header.json").write_text(json.dumps(header, indent=2, sort_keys=True) + "\n")
+    reseal_after_mutation(out, lambda _event: None)
+    monkeypatch.setattr(rival_loop.worlds, "qualify",
+                        lambda *_a, **_k: pytest.fail("template schema must be checked before case replay"))
+    with pytest.raises(ValueError, match="prompt template"):
+        runner.verify_run(out, check_source=False)
+
+
+def test_crlf_prompt_templates_preserve_frozen_file_bytes(tmp_path, monkeypatch):
+    root = tmp_path / "source"
+    prompts = root / "prompts"
+    prompts.mkdir(parents=True)
+    bindings = artifacts.source_bindings()
+    expected_templates = {}
+    for phase in ("initial", *runner.ARMS):
+        text = (artifacts.ROOT / "prompts" / f"{phase}.md").read_text()
+        raw = (text + "\nUTF-8 fixture: café\n").replace("\n", "\r\n").encode("utf-8")
+        path = prompts / f"{phase}.md"
+        path.write_bytes(raw)
+        expected_templates[phase] = raw.decode("utf-8")
+        bindings[f"prompts/{phase}.md"] = artifacts.file_hash(path)
+    monkeypatch.setattr(runner, "ROOT", root)
+    monkeypatch.setattr(runner, "source_bindings", lambda: bindings)
+    out = tmp_path / "run"
+    assert runner.smoke(out, 1)["status"] == "completed"
+    assert artifacts.read_json(out / "header.json")["templates"] == expected_templates
+    assert runner.verify_run(out, check_source=False)["status"] == "verified"
+
+
 def test_no_fit_or_resolution_does_not_earn_truth_coverage(fixture_case):
     public, private = fixture_case
     bank = runner._bank(FakeProvider().generate("", {}), public, "initial")

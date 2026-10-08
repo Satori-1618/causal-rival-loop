@@ -2,8 +2,10 @@
 from __future__ import annotations
 
 import json
+from itertools import product
 from pathlib import Path
 import random
+import shutil
 
 from .artifacts import (ROOT, check_sources, digest, environment, file_hash,
                         git_state, now, read_json, source_bindings, write_json)
@@ -87,22 +89,100 @@ def qualification(prepared, out):
             continue
         gate = qualify(case, labels[case["case_id"]])
         rows.append({"case_id": case["case_id"], "qualification": gate})
-    # Predictions-only budget check on a disclosed engineering setting; not a
-    # peek at realized evaluation observations. Hard cases are still retained.
+    # Predictions-only checks: no evaluation graph or realized outcome is read.
+    # Structural coverage gates; noise-limited cases remain in the population.
     probe = {"amplitude": "1", "output_gain": "1", "family": "linear",
              "sigma": .03, "menu": public[0]["menu"]}
     predictions = {f"class_{i}": predict(t["readout"], probe) for i, t in enumerate(catalog())}
     from .vendor.design import signatures
     preflight = known_bank_preflight(predictions, signatures(predictions), probe, 1e-5)
+    design_checks = qualify_design()
     result = {"status": "qualified" if all(r["qualification"]["all_passed"] for r in rows)
-              and preflight["all_pairs_above_one"] else "not_qualified",
+              and design_checks["structural_gate_passed"] else "not_qualified",
               "created_at": now(), "prepared_manifest_sha256": file_hash(Path(prepared) / "manifest.json"),
               "source_bindings": source_bindings(), "development_checks": rows,
               "known_bank_preflight": preflight,
+              "design_qualification": design_checks,
               "qualification_is_privileged_harness_setup": True,
               "evaluation_measurements_generated": False}
     write_json(out, result)
     return result
+
+
+def qualify_design():
+    """Outcome-free catalog coverage under weak banks and parameter extremes."""
+    from .dsl import predict, seed_rules
+    from .inference import known_bank_preflight, select_cells
+    from .runner import public_numeric_bound
+    from .vendor.design import signatures
+    from .worlds import catalog, MENU
+    table = catalog()
+    grid, adversarial = [], []
+    for amplitude, gain, sigma, family in product(
+            ("1/10", "3/10", "1", "3"), ("4/5", "6/5"), (.03, .10, .30),
+            ("linear", "relu_offset")):
+        setting = {"amplitude": amplitude, "output_gain": gain, "sigma": sigma,
+                   "family": family, "menu": list(MENU)}
+        predictions = {item["template_id"]: predict(item["readout"], setting) for item in table}
+        check = known_bank_preflight(predictions, signatures(predictions), setting, public_numeric_bound(setting))
+        grid.append({"setting": setting,
+                     **{k: v for k, v in check.items() if k != "pair_ratios"}})
+    # A valid empty generation, and four context-independent generated rules,
+    # must not deprive the other context of discovery measurements.
+    setting = {"amplitude": "1", "output_gain": "1", "sigma": .03,
+               "family": "linear", "menu": list(MENU)}
+    catalog_predictions = {item["template_id"]: predict(item["readout"], setting) for item in table}
+    seeds = {r["id"]: predict(r["readout"], setting) for r in seed_rules()}
+    a, b = {"var": "a"}, {"var": "b"}
+    independent = {**seeds, "zero": predict({"const": 0}, setting),
+        **{op: predict({"op": op, "left": a, "right": b}, setting) for op in ("avg", "min", "max")}}
+    for name, bank in (("empty_generation_seed_only", seeds), ("context_independent_generation", independent)):
+        selected = select_cells(bank, signatures(bank), setting, public_numeric_bound(setting))
+        restricted = {name: [row[i] for i in selected["cells"]] for name, row in catalog_predictions.items()}
+        preserved = len(signatures(restricted)) == len(signatures(catalog_predictions))
+        adversarial.append({"initial_bank": name, "selected_cells": selected["cells"],
+                            "catalog_classes": len(table), "purchased_classes": len(signatures(restricted)),
+                            "structural_catalog_preserved": preserved})
+    structural_pass = (all(row["structural_classes_preserved"] for row in grid)
+                       and all(row["structural_catalog_preserved"] for row in adversarial))
+    return {"structural_gate_passed": structural_pass, "parameter_checks": grid,
+            "adversarial_initial_banks": adversarial,
+            "noise_resolved_settings": sum(row["all_pairs_above_one"] for row in grid),
+            "total_settings": len(grid),
+            "scope": "Known-catalog predictions only; no evaluation outcomes. Structural blindness blocks release; statistical or numerical limits remain descriptive and do not filter cases."}
+
+
+def freeze_source(prepared, qualification_file, out):
+    """Freeze source and unmeasured inputs while leaving live settings pending."""
+    from .inference import power_table
+    config, _, _, _ = prepared_data(prepared)
+    state = git_state()
+    if not state["head"] or state["dirty"]:
+        raise ValueError("source freeze requires a committed, clean repository")
+    qualification_record = read_json(qualification_file)
+    if (qualification_record.get("status") != "qualified" or
+            qualification_record.get("prepared_manifest_sha256") != file_hash(Path(prepared) / "manifest.json")):
+        raise ValueError("source freeze requires qualified matching inputs")
+    check_sources(qualification_record["source_bindings"])
+    record = {"status": "source_input_freeze_not_live_release", "created_at": now(),
+              "git": state, "source_bindings": source_bindings(), "config": config,
+              "prepared_manifest_sha256": file_hash(Path(prepared) / "manifest.json"),
+              "qualification_sha256": file_hash(qualification_file),
+              "environment": environment(), "primary_planning_power": power_table(),
+              "freeze_executes_measurements": False, "live_execution_authorized": False,
+              "remaining": ["pin_live_model_settings_and_budget", "create_split_specific_live_freeze",
+                            "publish_freeze_and_obtain_review", "record_human_execution_release", "provide_api_credential"]}
+    out = Path(out)
+    out.mkdir(parents=True, exist_ok=False)
+    archived = out / "prepared"
+    archived.mkdir()
+    for name in ("manifest.json", "config.json", "public.json", "private.json", "population.json"):
+        shutil.copyfile(Path(prepared) / name, archived / name)
+    (archived / "private.json").chmod(0o600)
+    shutil.copyfile(qualification_file, out / "qualification.json")
+    record["files"] = {str(p.relative_to(out)): file_hash(p) for p in out.rglob("*.json")}
+    write_json(out / "freeze.json", record)
+    return record
 
 
 def freeze(prepared, qualification_file, split, out, development_run=None):
@@ -162,6 +242,8 @@ def authorize(prepared, freeze_dir, review_file, release_file, split, execute):
         raise ValueError("pending independent review and human release")
     freeze_file = Path(freeze_dir) / "freeze.json"
     frozen = read_json(freeze_file)
+    if frozen.get("status") != "local_freeze_requires_public_review_and_release":
+        raise ValueError("a source/input freeze is not a live-run freeze")
     frozen_hash = file_hash(freeze_file)
     if frozen["split"] != split:
         raise ValueError("release split mismatch")

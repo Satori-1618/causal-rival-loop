@@ -10,7 +10,7 @@ measurements then test their sealed predictions.
 The explanations are small executable rules, rather than freely invented
 prediction tables. Known neural computations provide a reference answer.
 
-**Status: implementation and local smoke testing.** No live generator experiment
+**Status: corrected implementation; source/input freeze.** No live generator experiment
 has been released. Mock-provider outputs test the software; they are not research
 results. A live evaluation requires a public freeze, independent review, and an
 explicit execution release.
@@ -24,7 +24,7 @@ Public setting + common anchor observations
                  |
         Structural preflight
                  |
-        Four selected interventions
+    Four reads covering both contexts
                  |
          +-------+--------+
          |                |
@@ -104,11 +104,18 @@ loop with a fake provider:
 .venv/bin/rival-loop qualify --prepared artifacts/prepared --out artifacts/qualification.json
 .venv/bin/rival-loop smoke --out artifacts/smoke --cases 4
 .venv/bin/rival-loop verify --run artifacts/smoke
+.venv/bin/rival-loop freeze-source --prepared artifacts/prepared \
+  --qualification artifacts/qualification.json --out freezes/source-input-v1
 ```
+
+The source-freeze command requires a committed, clean checkout and grants no
+live execution release. [Start the first loop](docs/FIRST_LOOP.md) lists the
+remaining model, budget, publication, and review requirements.
 
 The smoke command uses separate fixture seeds and a fake provider. It does not
 open evaluation outcomes or contact an API. Its scores are not evidence for the
-scientific question. `qualify` checks development computations only.
+scientific question. `qualify` checks development computations and outcome-free
+prediction coverage; it does not measure evaluation outcomes.
 
 Live commands are described in [docs/LIVE_RUN.md](docs/LIVE_RUN.md). They refuse
 to run with the default unconfigured generation settings or without separate

@@ -37,13 +37,13 @@ def validate_live_settings(settings):
     for name in ("model", "model_revision", "tokenizer_encoding"):
         if not isinstance(settings[name], str) or not settings[name].strip():
             raise ValueError(f"invalid {name}")
+    for name in ("max_input_tokens", "max_output_tokens"):
+        if type(settings[name]) is not int:
+            raise ValueError(f"{name} must be an integer")
     for name in required[2:-1]:
         value = settings[name]
         if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value) or value <= 0:
             raise ValueError(f"{name} must be finite and positive")
-    for name in ("max_input_tokens", "max_output_tokens"):
-        if int(settings[name]) != settings[name]:
-            raise ValueError(f"{name} must be an integer")
     if settings["max_output_tokens"] < 16:
         raise ValueError("max_output_tokens must be at least 16")
     temperature = settings.get("temperature")
@@ -90,7 +90,7 @@ class OpenAIProvider:
     def generate(self, prompt, settings):
         instruction = "Return only the requested JSON. No tools or external resources are available."
         # Framing allowance is explicit; authoritative server counts are checked too.
-        estimated_input = len(self.encoding.encode(instruction + prompt)) + 128
+        estimated_input = len(self.encoding.encode(instruction + prompt, disallowed_special=())) + 128
         if estimated_input > settings["max_input_tokens"]:
             return {"status": "input_limit", "model": self.model, "provider": "openai_responses",
                     "raw": "", "usage": None, "cost_usd": 0.0, "cost_reserved_usd": 0.0}
@@ -125,7 +125,7 @@ class OpenAIProvider:
         status = "ok" if result.get("status") == "completed" else "incomplete_response"
         if result.get("model") != self.model:
             raise FatalProviderError("response model differs from frozen model revision", result)
-        if not isinstance(usage, dict) or any(not isinstance(usage.get(k), int) or usage[k] < 0
+        if not isinstance(usage, dict) or any(type(usage.get(k)) is not int or usage[k] < 0
                                              for k in ("input_tokens", "output_tokens")):
             raise FatalProviderError("missing authoritative usage; budget cannot be checked", result)
         if usage["input_tokens"] > settings["max_input_tokens"] or usage["output_tokens"] > settings["max_output_tokens"]:

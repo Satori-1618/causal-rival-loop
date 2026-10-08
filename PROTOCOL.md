@@ -1,6 +1,9 @@
 # One-update causal-rival generation experiment
 
-**Protocol status: implementation draft; not released for a live experiment.**
+**Protocol status: corrected source/input freeze candidate; no live experiment released.**
+
+[Amendment 001](docs/AMENDMENT_001.md) records the pre-run design review and
+corrections. No live generator outcomes preceded these changes.
 
 This document specifies a bounded comparison. Numerical qualification and the
 software checks below must pass before a public freeze can be reviewed. Local
@@ -164,8 +167,9 @@ ties, but no additional outcomes.
 
 1. Measure four common anchors and release them to the initial generation.
 2. Make one initial generator call. Validate, derive predictions, and seal it.
-3. Add seeds; group exact full-menu signatures and select four additional menu
-   cells using the pinned maximin selector.
+3. Add seeds and group exact full-menu signatures. Purchase the four fixed
+   dose-2 reads: A and B in context 0, and A and B in context 1. This coverage
+   rule does not depend on which explanations were initially proposed.
 4. Measure those cells. Release outcomes only to the feedback revision.
 5. Make one revision call per path. Validate and seal both complete final banks,
    predictions, and lineage records.
@@ -176,6 +180,8 @@ ties, but no additional outcomes.
 Structural ties are reported, not silently rewritten. Revised rules are new
 versions and inherit no earlier compatibility certificate. Terminal outcomes
 never feed another revision or shared prompt change.
+The unchanged upstream maximin plan is retained as a diagnostic only. Its score
+does not describe the purchased plan; the latter has its own separation ratio.
 
 ## 8. Budget and observation model
 
@@ -244,8 +250,9 @@ It does not turn reused mechanism classes into independent evidence for transfer
 to new mechanism families. Report the realized class diversity alongside the
 case-level primary interval.
 
-Prespecified descriptive primary-case bands use the shared initial-bank maximin
-separation ratio: ratio ≤ 1, 1 < ratio ≤ 3, and ratio > 3. Report n and paired
+Prespecified descriptive primary-case bands use the shared initial-bank
+separation ratio under the purchased coverage-first plan:
+ratio ≤ 1, 1 < ratio ≤ 3, and ratio > 3. Report n and paired
 generated-coverage and correct-resolution counts per band, and separately by
 known noise SD; report realized amplitude/output-gain ranges. These bins have
 no additional tests or efficacy thresholds. The ratio describes separation
@@ -263,10 +270,12 @@ Before release, require:
 - Equal-budget accounting, sealed stages, strict schemas, and no retries.
 - A clean-copy verification of artifacts and decision recomputation.
 
-If the actual measurement budget cannot discriminate the known reference bank,
-redesign during development; do not execute an evaluation hoping the generator
-will fix the measurement design. Low resolution is an allowed outcome, not
-permission to force a decision.
+Qualification checks structural class preservation across 48 declared public
+parameter settings and seed-only/context-independent initial banks. A structural
+blind spot blocks freezing. Numerical and noise-resolution limits are reported
+separately and do not exclude difficult cases. The known-catalog check uses
+predictions only, not evaluation outcomes. Low resolution remains an allowed
+outcome and does not permit forcing a decision.
 
 During evaluation, an invalid generation is a recorded generation failure.
 Intervention failure, leakage, broken bindings, or missing mandatory data blocks
@@ -298,6 +307,10 @@ scope, findings, and any amendments. An explicit execution release follows the
 review and is bound to the reviewed freeze; a local mock run does not release a
 live experiment. A later change requires an amendment recording whether outcomes
 were already visible and may require a new evaluation.
+A local `freeze-source` snapshot binds the corrected source, unmeasured inputs,
+qualification, and planning calculations while live settings are still pending.
+It cannot authorize execution or substitute for the split-specific public run
+freeze with a pinned model, budget, review, and human release.
 
 ## 12. Required records and interpretation
 
