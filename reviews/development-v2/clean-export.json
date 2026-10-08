@@ -1,0 +1,12 @@
+{
+  "cases": 48,
+  "checked_at": "2026-10-08T15:18:00.030990+00:00",
+  "freeze_sha256": "f1c056690840b0d9996b784158d479ddd93c02997b85fe9a8f9d8410f343b09c",
+  "installed_metadata_directory": "editable-target/causal_rival_loop-0.1.0.dist-info",
+  "live_calls": 0,
+  "release_refusal_before_provider": true,
+  "source_binding_after_install": "PASS",
+  "source_binding_before_install": "PASS",
+  "status": "clean_export_and_real_editable_install_passed",
+  "validation_note": "Modern editable install wrote dist-info under the target directory, not egg-info under src. An initial location assertion was corrected; both actual binding checks passed."
+}

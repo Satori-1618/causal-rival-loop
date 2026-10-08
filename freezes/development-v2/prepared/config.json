@@ -1,0 +1,67 @@
+{
+  "cases": {
+    "allowed_downstream_families": [
+      "linear",
+      "relu_offset"
+    ],
+    "development": 12,
+    "evaluation": 36,
+    "evaluation_strata": {
+      "equivalent": 12,
+      "outside": 12,
+      "represented": 12
+    },
+    "primary_in_grammar_n": 24
+  },
+  "development_seed": 2026100801,
+  "evaluation_seed": 2026100802,
+  "generation": {
+    "input_usd_per_million": 2.5,
+    "max_calls_per_case": 3,
+    "max_cost_usd": 20,
+    "max_input_tokens": 16384,
+    "max_output_tokens": 8192,
+    "max_total_calls": 144,
+    "model": "gpt-6-sol",
+    "model_revision": "gpt-6-sol",
+    "output_usd_per_million": 10,
+    "provider": "openai_responses",
+    "reasoning_effort": "medium",
+    "retry_calls": 0,
+    "run_timeout_seconds": 7200,
+    "temperature": null,
+    "timeout_seconds": 120,
+    "tokenizer_encoding": "o200k_base"
+  },
+  "inference": {
+    "compatibility_alpha": 0.005,
+    "meaningful_gain": 0.2,
+    "primary": "generated_only_full_menu_coverage",
+    "primary_alpha": 0.05,
+    "statistical_unit": "case"
+  },
+  "measurements": {
+    "anchors": 4,
+    "draws_per_case": 192,
+    "extra_cells": 4,
+    "planned_physical_draws": 9216,
+    "samples_per_cell": 8,
+    "terminal_cells": 16
+  },
+  "protocol_version": "rival-loop-v1",
+  "release": {
+    "authorized": false,
+    "independent_review": null,
+    "public_freeze_commit": null
+  },
+  "rules": {
+    "fixed_seeds": [
+      "a",
+      "b"
+    ],
+    "max_depth": 3,
+    "max_generated": 4,
+    "max_nodes": 9
+  },
+  "status": "configured_development_pending_public_review_and_release"
+}
