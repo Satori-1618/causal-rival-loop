@@ -1,0 +1,28 @@
+{
+  "repository": "https://github.com/Satori-1618/causal-decidability-method-case.git",
+  "commit": "24f3e2639db276c72414385a398c5b9d135e4059",
+  "license": "MIT",
+  "files": [
+    {
+      "source": "src/causal_decidability/design.py",
+      "target": "src/rival_loop/vendor/design.py",
+      "sha256": "3d55a1885e1457cad8251d8e9d69b5ff8967eb25319bb377cfe42ca1122c3e0a"
+    },
+    {
+      "source": "src/causal_decidability/compatible_set.py",
+      "target": "src/rival_loop/vendor/compatible_set.py",
+      "sha256": "a83a1c8ff140385b61ad52e36d4e13698efd647bd9c20e03ef10cbe4e4e8eb3f"
+    },
+    {
+      "source": "applications/design-comparison/selection.py",
+      "target": "src/rival_loop/vendor/selection.py",
+      "sha256": "9fed3ec9327e9086b841b8e3a6525c9ffa9ed88990ff4c765abcffcaa60d8f8b"
+    },
+    {
+      "source": "LICENSE",
+      "target": "src/rival_loop/vendor/LICENSE",
+      "sha256": "3e565f97ddb39ba9dd07a1e18ed1d21989bd32b0142f9606989ba735d74d7e63"
+    }
+  ],
+  "policy": "Vendored implementations are byte-identical. Adapters live outside vendor/. No prior outcomes are bundled."
+}

@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "causal-rival-loop"
+version = "0.1.0"
+description = "A bounded, auditable test of feedback-assisted causal rival generation"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{name = "Felix Borck"}]
+license = "MIT"
+dependencies = ["numpy>=1.24", "scipy>=1.11", "torch>=2.2"]
+
+[project.optional-dependencies]
+test = ["pytest>=8"]
+live = ["tiktoken>=0.7"]
+
+[project.scripts]
+rival-loop = "rival_loop.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+

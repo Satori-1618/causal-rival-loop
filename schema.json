@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:causal-rival-loop:generated-rules:v1",
+  "title": "Generated executable causal rivals",
+  "description": "Structural response schema. Runtime validation additionally rejects duplicate JSON keys and IDs, enforces leaf-depth <= 3 and total node count <= 9, and computes predictions itself.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["rules"],
+  "properties": {
+    "rules": {
+      "type": "array",
+      "maxItems": 4,
+      "items": {"$ref": "#/$defs/rule"}
+    }
+  },
+  "$defs": {
+    "rule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "mechanism", "readout"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1, "maxLength": 64, "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,63}$"},
+        "mechanism": {"type": "string", "minLength": 1, "maxLength": 2000, "pattern": "\\S"},
+        "readout": {"$ref": "#/$defs/ast"}
+      }
+    },
+    "ast": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["var"],
+          "properties": {"var": {"enum": ["a", "b"]}}
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["const"],
+          "properties": {"const": {"type": "integer", "const": 0}}
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["op", "left", "right"],
+          "properties": {
+            "op": {"enum": ["avg", "min", "max"]},
+            "left": {"$ref": "#/$defs/ast"},
+            "right": {"$ref": "#/$defs/ast"}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["op", "zero", "one"],
+          "properties": {
+            "op": {"const": "select"},
+            "zero": {"$ref": "#/$defs/ast"},
+            "one": {"$ref": "#/$defs/ast"}
+          }
+        }
+      ]
+    }
+  }
+}

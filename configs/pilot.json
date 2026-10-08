@@ -1,0 +1,35 @@
+{
+  "protocol_version": "rival-loop-v1",
+  "status": "development_draft_no_live_release",
+  "development_seed": 2026100801,
+  "evaluation_seed": 2026100802,
+  "cases": {
+    "development": 12,
+    "evaluation": 36,
+    "evaluation_strata": {"represented": 12, "equivalent": 12, "outside": 12},
+    "primary_in_grammar_n": 24,
+    "allowed_downstream_families": ["linear", "relu_offset"]
+  },
+  "rules": {"max_generated": 4, "max_depth": 3, "max_nodes": 9, "fixed_seeds": ["a", "b"]},
+  "measurements": {"anchors": 4, "extra_cells": 4, "terminal_cells": 16, "samples_per_cell": 8, "draws_per_case": 192, "planned_physical_draws": 9216},
+  "inference": {"compatibility_alpha": 0.005, "primary_alpha": 0.05, "meaningful_gain": 0.2, "statistical_unit": "case", "primary": "generated_only_full_menu_coverage"},
+  "generation": {
+    "provider": null,
+    "model": null,
+    "model_revision": null,
+    "temperature": null,
+    "reasoning_effort": null,
+    "max_input_tokens": null,
+    "max_output_tokens": null,
+    "max_calls_per_case": 3,
+    "max_total_calls": 144,
+    "retry_calls": 0,
+    "timeout_seconds": null,
+    "run_timeout_seconds": null,
+    "max_cost_usd": null,
+    "input_usd_per_million": null,
+    "output_usd_per_million": null,
+    "tokenizer_encoding": null
+  },
+  "release": {"public_freeze_commit": null, "independent_review": null, "authorized": false}
+}
