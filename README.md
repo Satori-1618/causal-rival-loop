@@ -10,8 +10,8 @@ measurements then test their sealed predictions.
 The explanations are small executable rules, rather than freely invented
 prediction tables. Known neural computations provide a reference answer.
 
-**Status: corrected implementation; source/input freeze.** No live generator experiment
-has been released. Mock-provider outputs test the software; they are not research
+**Status: development configuration prepared; execution pending review and release.**
+No live generator experiment has been released. Mock-provider outputs test the software; they are not research
 results. A live evaluation requires a public freeze, independent review, and an
 explicit execution release.
 
@@ -68,6 +68,9 @@ candidate is not automatically proof that the true mechanism was proposed.
   release requirements.
 - [configs/pilot.json](configs/pilot.json): declared budgets and currently
   unconfigured live-model settings.
+- [configs/development.json](configs/development.json) and
+  [development freeze plan](docs/DEVELOPMENT_FREEZE.md): proposed live settings,
+  price sources, reservations, and publication requirements.
 - [schema.json](schema.json): strict generated-rule response format. Runtime
   validation also enforces depth, node count, IDs, and duplicate-key rejection.
 - [prompts/initial.md](prompts/initial.md),

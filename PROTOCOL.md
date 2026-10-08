@@ -1,6 +1,6 @@
 # One-update causal-rival generation experiment
 
-**Protocol status: corrected source/input freeze candidate; no live experiment released.**
+**Protocol status: configured development freeze; execution pending review and release.**
 
 [Amendment 001](docs/AMENDMENT_001.md) records the pre-run design review and
 corrections. No live generator outcomes preceded these changes.

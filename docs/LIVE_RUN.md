@@ -29,8 +29,8 @@ Use the executable installed in this source checkout's virtual environment.
 
 .venv/bin/rival-loop run --prepared artifacts/prepared \
   --freeze artifacts/freeze-development \
-  --review records/review-development.json \
-  --release records/release-development.json \
+  --review releases/review-development.json \
+  --release releases/release-development.json \
   --out artifacts/run-development --split development --execute
 
 .venv/bin/rival-loop verify --run artifacts/run-development
@@ -90,6 +90,8 @@ A separate human release supplies:
 }
 ```
 
+Store local records under ignored `releases/` so they do not dirty the checkout.
+Publish review evidence separately, preserving the frozen source bindings.
 These are shapes for independently supplied records, not completed certificates.
 Do not copy placeholders into a released run. Hash checks establish artifact
 binding, not honesty of a reviewer name or external publication timestamp. Those
